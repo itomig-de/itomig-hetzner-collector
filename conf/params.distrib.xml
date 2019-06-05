@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Default values for parameters. Do NOT alter this file, use params.local.xml instead -->
+<parameters>
+    <itop_url>http://localhost/itomig2</itop_url>
+    <itop_login>admin</itop_login>
+    <itop_password>0000</itop_password>
+    <console_log_level>3</console_log_level>
+    <syslog_log_level>-1</syslog_log_level>
+
+    <max_chunk_size>1000</max_chunk_size>
+    <itop_synchro_timeout>600</itop_synchro_timeout>
+    <stop_on_synchro_error>no</stop_on_synchro_error>
+
+    <!-- custom -->
+    <hetzner_tokens type="array">
+        <token>V30mRQqpYsYDDtMXhXR0Y8kwRn2In41YbMfCN1KwxeceVpqSR19JOWEQURkXeclr</token>
+        <token>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</token>
+    </hetzner_tokens>
+
+    <org>ITOMIG</org>
+
+    <!-- mapping tables -->
+    <status type="array">
+        <pattern>/running/production</pattern>
+        <pattern>/initializing/implementation</pattern>
+        <pattern>/starting/implementation</pattern>
+        <pattern>/stopping/implementation</pattern>
+        <pattern>/off/stock</pattern>
+        <pattern>/deleting/obsolete</pattern>
+        <pattern>/migrating/implementation</pattern>
+        <pattern>/rebuilding/implementation</pattern>
+        <pattern>/unknown/stock</pattern>
+    </status>
+    <default_status>stock</default_status>
+
+    <os_family type="array">
+        <pattern>/ubuntu/Linux</pattern>
+    </os_family>
+
+    <curl_options>
+        <CURLOPT_SSLVERSION>CURL_SSLVERSION_SSLv3</CURLOPT_SSLVERSION>
+        <CURLOPT_SSL_VERIFYHOST>2</CURLOPT_SSL_VERIFYHOST>
+        <CURLOPT_SSL_VERIFYPEER>1</CURLOPT_SSL_VERIFYPEER>
+    </curl_options>
+</parameters>

@@ -1,0 +1,177 @@
+{
+    "name": "farm",
+    "description": "",
+    "status": "implementation",
+    "user_id": "$synchro_user$",
+    "notify_contact_id": "$contact_to_notify$",
+    "scope_class": "Farm",
+    "database_table_name": "synchro_data_farm_4",
+    "scope_restriction": "",
+    "full_load_periodicity": "0",
+    "reconciliation_policy": "use_attributes",
+    "action_on_zero": "create",
+    "action_on_one": "update",
+    "action_on_multiple": "error",
+    "delete_policy": "ignore",
+    "delete_policy_update": "",
+    "delete_policy_retention": "0",
+    "attribute_list": [
+            {
+                    "attcode": "applicationsolution_list",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "row_separator": "|",
+                    "attribute_separator": ";",
+                    "value_separator": ":",
+                    "attribute_qualifier": "'",
+                    "finalclass": "SynchroAttLinkSet",
+                    "friendlyname": "applicationsolution_list"
+            },
+            {
+                    "attcode": "business_criticity",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "finalclass": "SynchroAttribute",
+                    "friendlyname": "business_criticity"
+            },
+            {
+                    "attcode": "contacts_list",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "row_separator": "|",
+                    "attribute_separator": ";",
+                    "value_separator": ":",
+                    "attribute_qualifier": "'",
+                    "finalclass": "SynchroAttLinkSet",
+                    "friendlyname": "contacts_list"
+            },
+            {
+                    "attcode": "description",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "finalclass": "SynchroAttribute",
+                    "friendlyname": "description"
+            },
+            {
+                    "attcode": "documents_list",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "row_separator": "|",
+                    "attribute_separator": ";",
+                    "value_separator": ":",
+                    "attribute_qualifier": "'",
+                    "finalclass": "SynchroAttLinkSet",
+                    "friendlyname": "documents_list"
+            },
+            {
+                    "attcode": "logicalvolumes_list",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "row_separator": "|",
+                    "attribute_separator": ";",
+                    "value_separator": ":",
+                    "attribute_qualifier": "'",
+                    "finalclass": "SynchroAttLinkSet",
+                    "friendlyname": "logicalvolumes_list"
+            },
+            {
+                    "attcode": "move2production",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "finalclass": "SynchroAttribute",
+                    "friendlyname": "move2production"
+            },
+            {
+                    "attcode": "name",
+                    "update": "1",
+                    "reconcile": "1",
+                    "update_policy": "master_locked",
+                    "finalclass": "SynchroAttribute",
+                    "friendlyname": "name"
+            },
+            {
+                    "attcode": "org_id",
+                    "update": "1",
+                    "reconcile": "1",
+                    "update_policy": "master_locked",
+                    "reconciliation_attcode": "name",
+                    "finalclass": "SynchroAttExtKey",
+                    "friendlyname": "org_id"
+            },
+            {
+                    "attcode": "passwords_list",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "row_separator": "|",
+                    "attribute_separator": ";",
+                    "value_separator": ":",
+                    "attribute_qualifier": "'",
+                    "finalclass": "SynchroAttLinkSet",
+                    "friendlyname": "passwords_list"
+            },
+            {
+                    "attcode": "providercontracts_list",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "row_separator": "|",
+                    "attribute_separator": ";",
+                    "value_separator": ":",
+                    "attribute_qualifier": "'",
+                    "finalclass": "SynchroAttLinkSet",
+                    "friendlyname": "providercontracts_list"
+            },
+            {
+                    "attcode": "redundancy",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "finalclass": "SynchroAttribute",
+                    "friendlyname": "redundancy"
+            },
+            {
+                    "attcode": "services_list",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "row_separator": "|",
+                    "attribute_separator": ";",
+                    "value_separator": ":",
+                    "attribute_qualifier": "'",
+                    "finalclass": "SynchroAttLinkSet",
+                    "friendlyname": "services_list"
+            },
+            {
+                    "attcode": "status",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "finalclass": "SynchroAttribute",
+                    "friendlyname": "status"
+            },
+            {
+                    "attcode": "tickets_list",
+                    "update": "1",
+                    "reconcile": "0",
+                    "update_policy": "master_locked",
+                    "row_separator": "|",
+                    "attribute_separator": ";",
+                    "value_separator": ":",
+                    "attribute_qualifier": "'",
+                    "finalclass": "SynchroAttLinkSet",
+                    "friendlyname": "tickets_list"
+            }
+    ],
+    "user_delete_policy": "nobody",
+    "url_icon": "",
+    "url_application": "",
+    "notify_contact_id_obsolescence_flag": ""
+}
