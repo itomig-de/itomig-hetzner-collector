@@ -24,6 +24,9 @@ class Manager
         
         curl_close($request);
 
-        return json_decode($serverOutput, true);
+        $res = json_decode($serverOutput, true);
+        if (isset($res['servers'])) 
+            return $res['servers'];
+        return array();
     }
 }

@@ -1,11 +1,11 @@
 {
-    "name": "virtual machine",
+    "name": "hetzner_virtualmachine",
     "description": "",
     "status": "implementation",
     "user_id": "$synchro_user$",
     "notify_contact_id": "$contact_to_notify$",
     "scope_class": "VirtualMachine",
-    "database_table_name": "synchro_data_virtualmachine_3",
+    "database_table_name": "synchro_data_hetzner_virtualmachine",
     "scope_restriction": "",
     "full_load_periodicity": "0",
     "reconciliation_policy": "use_attributes",
@@ -149,18 +149,6 @@
                     "friendlyname": "osversion_id"
             },
             {
-                    "attcode": "passwords_list",
-                    "update": "1",
-                    "reconcile": "0",
-                    "update_policy": "master_locked",
-                    "row_separator": "|",
-                    "attribute_separator": ";",
-                    "value_separator": ":",
-                    "attribute_qualifier": "'",
-                    "finalclass": "SynchroAttLinkSet",
-                    "friendlyname": "passwords_list"
-            },
-            {
                     "attcode": "providercontracts_list",
                     "update": "1",
                     "reconcile": "0",
@@ -224,6 +212,5 @@
     ],
     "user_delete_policy": "nobody",
     "url_icon": "",
-    "url_application": "",
-    "notify_contact_id_obsolescence_flag": ""
+    "url_application": ""
 }

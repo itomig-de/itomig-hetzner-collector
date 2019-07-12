@@ -14,99 +14,45 @@
 //   You should have received a copy of the GNU Affero General Public License
 //   along with this application. If not, see <http://www.gnu.org/licenses/>
 
-require_once APPROOT.'extensions/Client.class.php';
+require_once APPROOT.'extensions/HetznerCollector.class.php';
 
-class VirtualMachine extends Collector
+class VirtualMachine extends HetznerCollector
 {
 	protected $idx;
-    static protected $aObjects = [];
+    protected $aObjects = [];
     
-    static protected $oStatus;
-    static protected $oOSFamily;
-	
-	public function AttributeIsOptional($sAttCode)
-	{
-		// If the module Service Management for Service Providers is selected during the setup
-		// there is no "services_list" attribute on VirtualMachines. Let's safely ignore it.
-		return parent::AttributeIsOptional($sAttCode);
-	}
-	
-	static public function GetServers()
-	{
-        try
-        {
-            $aTokens = Utils::GetConfigurationValue('hetzner_tokens', array());
+    protected $oStatus;
+    protected $oOSFamily;
 
-            if (!is_array($aTokens) || count($aTokens) < 1)
-            {
-                return self::$aObjects;
-            } 
+    protected $bHasTeemIp = null;
+    protected $sDefaultStatus;
+    protected $sDefaultOrg;
 
-            foreach ($aTokens as $sToken)
-            {
-                $oClient = new Client($sToken);
-                $aResult = $oClient->server->list();
+    public function ExtractData($aObject)
+    {
+        $dCreationDate = date("Y-m-d", strtotime($aObject['image']['created']));
+        return array(
+            'primary_key' => $aObject['id']."-".$aObject['name']."-".$aObject['datacenter']['name']. "-".$dCreationDate,
+            'name' => $aObject['name'],
+            'org_id' => $this->sDefaultOrg,
+            'status' => $this->oStatus->MapValue($aObject['status'], $this->sDefaultStatus),
+            'virtualhost_id' => $aObject['datacenter']['name'],
+            'osfamily_id' => $this->oOSFamily->MapValue($aObject['image']['os_flavor']), // TODO: Lucie : should be collected ???
+            'osversion_id' => $aObject['image']['os_version'], // TODO: Lucie : collect it too, create when does not exist
+            'move2production' => $dCreationDate,
+            'managementip' => $aObject['public_net']['ipv4']['ip'], // TODO: Lucie : check modules for teemip, different behaviour
+        );
+    }
 
-                $aArray = $aResult['servers'];
-                if(isset($aArray) && is_array($aArray) && count($aArray) > 0) {
-                    $sDefaultOrg = Utils::GetConfigurationValue('org', '');
-                    $sDefaultStatus = Utils::GetConfigurationValue('default_status', '');
+    public function InitConstants()
+    {
+        $this->sDefaultOrg = Utils::GetConfigurationValue('org', '');
+        $this->sDefaultStatus = Utils::GetConfigurationValue('default_status', '');
+    }
 
-                    foreach($aArray as $aObject)
-                    {
-                        $dCreationDate = date("Y-m-d", strtotime($aObject['image']['created']));
-                        self::$aObjects[] = array(
-                            'id' => $aObject['id']." - ".$aObject['name']." - ".$aObject['datacenter']['name']. " - ".$dCreationDate,
-                            'name' => $aObject['name'],
-                            'org_id' => $sDefaultOrg,
-                            'status' => self::$oStatus->MapValue($aObject['status'], $sDefaultStatus),
-                            'virtualhost_id' => $aObject['datacenter']['name'],
-                            'osfamily_id' => self::$oOSFamily->MapValue($aObject['image']['os_flavor']),
-                            'osversion_id' => $aObject['image']['os_version'],
-                            'move2production' => $dCreationDate,
-                            'managementip' => $aObject['public_net']['ipv4']['ip'],
-                        );
-                    }
-                }
-            }
-            return self::$aObjects;
-        } catch (Exception $e)
-        {
-            Utils::Log(LOG_ERROR, 'Error : '.$e->getMessage());
-            echo "error : ".$e->getMessage();
-        }
-	}
-	
-	public function Prepare()
-	{
-		$bRet = parent::Prepare();
-		if (!$bRet) return false;
-
-        self::$oStatus = new MappingTable('status');
-        self::$oOSFamily = new MappingTable('os_family');
-		self::GetServers();
-
-		$this->idx = 0;
-		return true;
-	}
-
-	public function Fetch()
-	{
-		if ($this->idx < count(self::$aObjects))
-		{
-			$aObject = self::$aObjects[$this->idx++];
-			return array(
-					'primary_key' => $aObject['id'],
-                    'name' => $aObject['name'],
-                    'org_id' => $aObject['org_id'],
-                    'status' => $aObject['status'],
-                    'virtualhost_id' => $aObject['virtualhost_id'],
-                    'osfamily_id' => $aObject['osfamily_id'],
-                    'osversion_id' => $aObject['osversion_id'],
-                    'move2production' => $aObject['move2production'],
-                    'managementip' => $aObject['managementip'],
-			);
-		}
-		return false;
-	}
+    public function PrepareMappingTables()
+    {
+        $this->oStatus = new MappingTable('status');
+        $this->oOSFamily = new MappingTable('os_family');
+    }
 }
