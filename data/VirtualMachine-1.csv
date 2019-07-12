@@ -1,4 +1,0 @@
-primary_key;name;org_id;status;virtualhost_id;osfamily_id;osversion_id;move2production;managementip
-"1665816 - monitoring-nbg - nbg1-dc3 - 2018-05-02";monitoring-nbg;ITOMIG;stock;nbg1-dc3;Linux;18.04;2018-05-02;116.203.36.228
-"1799963 - deletion-via-api-trotz-schutz-test - nbg1-dc3 - 2018-05-02";deletion-via-api-trotz-schutz-test;ITOMIG;production;nbg1-dc3;Linux;18.04;2018-05-02;116.203.67.74
-"1817482 - monitoring-fsn - fsn1-dc14 - 2019-02-10";monitoring-fsn;ITOMIG;production;fsn1-dc14;Linux;;2019-02-10;116.202.16.87
