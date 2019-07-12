@@ -13,7 +13,6 @@
 //
 //   You should have received a copy of the GNU Affero General Public License
 //   along with this application. If not, see <http://www.gnu.org/licenses/>
-error_reporting(E_ALL ^ E_NOTICE);
 
 // core
 require_once(APPROOT.'core/collector.class.inc.php');
@@ -25,15 +24,17 @@ require_once(APPROOT.'core/restclient.class.inc.php');
 require_once(APPROOT.'core/sqlcollector.class.inc.php');
 require_once(APPROOT.'core/utils.class.inc.php');
 
-require_once(APPROOT.'collectors/Farm.php');
-require_once(APPROOT.'collectors/VirtualMachine.php');
+require_once(APPROOT.'extensions/autoloader.php');
+
+require_once(APPROOT.'collectors/iTopFarmCollector.class.inc.php');
+require_once(APPROOT.'collectors/iTopVirtualMachineCollector.class.inc.php');
 
 // Register the collectors (one collector class per data synchro task to run)
 // and tell the orchestrator in which order to run them
 
 $iRank = 1;
-Orchestrator::AddCollector($iRank++, 'Farm');
-Orchestrator::AddCollector($iRank++, 'VirtualMachine');
+Orchestrator::AddCollector($iRank++, 'iTopFarmCollector');
+Orchestrator::AddCollector($iRank++, 'iTopVirtualMachineCollector');
 
 
 

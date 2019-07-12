@@ -3,23 +3,55 @@
 <parameters>
     <itop_url>http://localhost/hetzner</itop_url>
     <itop_login>admin</itop_login>
-    <itop_password>0000</itop_password>
-    <console_log_level>3</console_log_level>
+    <itop_password>admin</itop_password>
+
+    <!-- console_log_level: level of logging to console (std output)
+      -1 : none, nothing will be logged to the console
+       0 : System wide emergency errors only (LOG_EMERG)
+       1 : Alert errors (LOG_ALERT)
+       2 : Critical errors (LOG_CRIT)
+       3 : Application level errors (LOG_ERR)
+       4 : Warnings
+       5 : Notice
+       6 : Information
+       7 : Debug traces
+       -->
+    <console_log_level>4</console_log_level>
+    <!-- syslog_log_level: level of logging to Syslog
+      -1 : none, nothing will be logged to syslog
+       0 : System wide emergency errors (LOG_EMERG)
+       1 : Alert errors (LOG_ALERT)
+       2 : Critical errors (LOG_CRIT)
+       3 : Application level errors (LOG_ERR)
+       4 : Warnings
+       5 : Notice
+       6 : Information
+       7 : Debug traces
+       -->
     <syslog_log_level>-1</syslog_log_level>
 
+    <!-- Maximum number of elements to process in one iteration (for upload and synchro in iTop) -->
     <max_chunk_size>1000</max_chunk_size>
+    <!-- Timeout for waiting for the execution of one data synchro task (in seconds) -->
     <itop_synchro_timeout>600</itop_synchro_timeout>
+    <!-- Whether or not to stop when an error occurs during a synchronization -->
     <stop_on_synchro_error>no</stop_on_synchro_error>
+    <!-- CURL options used for web requests to itop server -->
+    <curl_options>
+        <CURLOPT_SSLVERSION>CURL_SSLVERSION_SSLv3</CURLOPT_SSLVERSION>
+        <CURLOPT_SSL_VERIFYHOST>2</CURLOPT_SSL_VERIFYHOST>
+        <CURLOPT_SSL_VERIFYPEER>1</CURLOPT_SSL_VERIFYPEER>
+    </curl_options>
 
-    <!-- custom -->
+    <!-- Collector specific settings -->
     <hetzner_tokens type="array">
-        <token>V30mRQqpYsYDDtMXhXR0Y8kwRn2In41YbMfCN1KwxeceVpqSR19JOWEQURkXeclr</token>
         <token>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</token>
     </hetzner_tokens>
 
-    <org>ITOMIG</org>
+    <!-- Default Values for synchronized objects -->
+    <org>Demo</org>
 
-    <!-- mapping tables -->
+    <!-- Map the hetzner status to the status in itop -->
     <status type="array">
         <pattern>/running/production</pattern>
         <pattern>/initializing/implementation</pattern>
@@ -30,16 +62,13 @@
         <pattern>/migrating/implementation</pattern>
         <pattern>/rebuilding/implementation</pattern>
         <pattern>/unknown/stock</pattern>
+        <!-- <pattern>/.*/%1$s</pattern> -->  
     </status>
     <default_status>stock</default_status>
 
+    <!-- Mapping for the OS Family -->
     <os_family type="array">
-        <pattern>/ubuntu/Linux</pattern>
+        <pattern>/linux/Linux</pattern>
+        <!-- <pattern>/.*/%1$s</pattern> -->
     </os_family>
-
-    <curl_options>
-        <CURLOPT_SSLVERSION>CURL_SSLVERSION_SSLv3</CURLOPT_SSLVERSION>
-        <CURLOPT_SSL_VERIFYHOST>2</CURLOPT_SSL_VERIFYHOST>
-        <CURLOPT_SSL_VERIFYPEER>1</CURLOPT_SSL_VERIFYPEER>
-    </curl_options>
 </parameters>

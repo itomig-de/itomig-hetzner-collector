@@ -14,9 +14,7 @@
 //   You should have received a copy of the GNU Affero General Public License
 //   along with this application. If not, see <http://www.gnu.org/licenses/>
 
-require_once APPROOT.'extensions/HetznerCollector.class.php';
-
-class VirtualMachine extends HetznerCollector
+class iTopVirtualMachineCollector extends HetznerCollector
 {
 	protected $idx;
     protected $aObjects = [];
@@ -28,7 +26,7 @@ class VirtualMachine extends HetznerCollector
     protected $sDefaultStatus;
     protected $sDefaultOrg;
 
-    public function ExtractData($aObject)
+    protected function ExtractData($aObject)
     {
         $dCreationDate = date("Y-m-d", strtotime($aObject['image']['created']));
         return array(
@@ -44,13 +42,13 @@ class VirtualMachine extends HetznerCollector
         );
     }
 
-    public function InitConstants()
+    protected function InitConstants()
     {
         $this->sDefaultOrg = Utils::GetConfigurationValue('org', '');
         $this->sDefaultStatus = Utils::GetConfigurationValue('default_status', '');
     }
 
-    public function PrepareMappingTables()
+    protected function PrepareMappingTables()
     {
         $this->oStatus = new MappingTable('status');
         $this->oOSFamily = new MappingTable('os_family');

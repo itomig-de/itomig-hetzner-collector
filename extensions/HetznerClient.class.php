@@ -1,10 +1,8 @@
 <?php
 
-require_once 'ServerManager.class.php';
-
-class Client
+class HetznerClient
 {
-    private $url = "https://api.hetzner.cloud/v1/";
+    private $url = "https://api.hetzner.cloud/v1/"; //TODO: Lucie: Make it configurable
     private $token = "";
 
     public function __construct($token)

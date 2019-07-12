@@ -14,26 +14,24 @@
 //   You should have received a copy of the GNU Affero General Public License
 //   along with this application. If not, see <http://www.gnu.org/licenses/>
 
-require_once APPROOT.'extensions/HetznerCollector.class.php';
-
-class Farm extends HetznerCollector
+class iTopFarmCollector extends HetznerCollector
 {
 	protected $idx;
     protected $aObjects = [];
 
     protected $sDefaultOrg;
 
-    public function ExtractData($aObject)
+    protected function ExtractData($aObject)
     {
         return array(
             'primary_key' => $aObject['datacenter']['id']."-".$aObject['datacenter']['name'],
             'name' => $aObject['datacenter']['name'],
-            'org_id' => $this->$sDefaultOrg
+            'org_id' => $this->sDefaultOrg
         );
     }
 
-    public function InitConstants()
+    protected function InitConstants()
     {
-        $this->$sDefaultOrg = Utils::GetConfigurationValue('org', '');
+        $this->sDefaultOrg = Utils::GetConfigurationValue('org', '');
     }
 }

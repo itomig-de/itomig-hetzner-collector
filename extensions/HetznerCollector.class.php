@@ -1,20 +1,11 @@
 <?php
 
-require_once APPROOT.'extensions/Client.class.php';
-
-class HetznerCollector extends Collector
+class abstract HetznerCollector extends Collector
 {
 	protected $idx;
     protected $aObjects = [];
-	
-	public function AttributeIsOptional($sAttCode)
-	{
-		// If the module Service Management for Service Providers is selected during the setup
-		// there is no "services_list" attribute on VirtualMachines. Let's safely ignore it.
-		return parent::AttributeIsOptional($sAttCode);
-	}
     
-    public function GetData()
+    protected function GetData()
     {
         try
         {
@@ -29,11 +20,10 @@ class HetznerCollector extends Collector
             // fill the object array with each token
             foreach ($aTokens as $sToken)
             {
-                $oClient = new Client($sToken);
-                $aResult = $oClient->server->list();
-    
+                $oClient = new HetznerClient($sToken);
                 // get json array from hetzner with all data
-                $aArray = $aResult;
+                $aArray = $oClient->server->list();
+    
                 // if the returned array is not empty
                 if(isset($aArray) && is_array($aArray) && count($aArray) > 0)
                 {
@@ -54,21 +44,17 @@ class HetznerCollector extends Collector
     /**
      * extracts the necessary infos from the given json array node
      */
-    public function ExtractData($aObject)
-    {
-        echo "test\n";
-        return array();
-    }
+    protected abstract function ExtractData($aObject);
 
     /**
      * initialize constants like organization name
      */
-    public function InitConstants()
+    protected function InitConstants()
     {
         //
     }
 
-    public function PrepareMappingTables()
+    protected function PrepareMappingTables()
     {
         //
     }
