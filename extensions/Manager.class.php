@@ -5,7 +5,7 @@ class Manager
     protected $client;
     protected $uri = "";
 
-    public function __construct(Client $client)
+    public function __construct(HetznerClient $client)
     {
         $this->client = $client;
     }

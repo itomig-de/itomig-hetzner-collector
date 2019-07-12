@@ -1,6 +1,6 @@
 <?php
 
-class abstract HetznerCollector extends Collector
+abstract class HetznerCollector extends Collector
 {
 	protected $idx;
     protected $aObjects = [];
