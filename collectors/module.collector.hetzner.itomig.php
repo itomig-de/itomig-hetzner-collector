@@ -2,7 +2,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'collector.hetzner.itomig/0.9.1',
+	'collector.hetzner.itomig/1.0.0',
 	array(
 		// Identification
 		//

@@ -1,5 +1,6 @@
 <?php
 // Copyright (C) 2014-2015 Combodo SARL
+// Author : ITOMIG GmbH, Lucie BECHTOLD
 //
 //   This application is free software; you can redistribute it and/or modify	
 //   it under the terms of the GNU Affero General Public License as published by
@@ -22,14 +23,14 @@ class iTopVirtualMachineCollector extends HetznerCollector
     protected $oStatus;
     protected $oOSFamily;
 
-    protected $bHasTeemIp = null;
+    protected $bHasTeemIp = false;
     protected $sDefaultStatus;
     protected $sDefaultOrg;
 
     protected function ExtractData($aObject)
     {
         $dCreationDate = date("Y-m-d", strtotime($aObject['image']['created']));
-        return array(
+        $aObj = array(
             'primary_key' => $aObject['id']."-".$aObject['name']."-".$aObject['datacenter']['name']. "-".$dCreationDate,
             'name' => $aObject['name'],
             'org_id' => $this->sDefaultOrg,
@@ -38,14 +39,20 @@ class iTopVirtualMachineCollector extends HetznerCollector
             'osfamily_id' => $this->oOSFamily->MapValue($aObject['image']['os_flavor']), // TODO: Lucie : should be collected ???
             'osversion_id' => $aObject['image']['os_version'], // TODO: Lucie : collect it too, create when does not exist
             'move2production' => $dCreationDate,
-            'managementip' => $aObject['public_net']['ipv4']['ip'], // TODO: Lucie : check modules for teemip, different behaviour
         );
+        if (!$this->bHasTeemIp){
+            $aObj['managementip'] = $aObject['public_net']['ipv4']['ip']; // TODO: Lucie : check modules for teemip, different behaviour
+        }
+        // TODO: Lucie : IP collecting can be disabled when using TeemIP
+
+        return $aObj;
     }
 
     protected function InitConstants()
     {
         $this->sDefaultOrg = Utils::GetConfigurationValue('org', '');
         $this->sDefaultStatus = Utils::GetConfigurationValue('default_status', '');
+        $this->bHasTeemIp = (Utils::GetConfigurationValue('teemip', '') === "true");
     }
 
     protected function PrepareMappingTables()

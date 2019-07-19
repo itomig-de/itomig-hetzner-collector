@@ -1,5 +1,7 @@
 <?php
 
+// Author : ITOMIG GmbH, Lucie BECHTOLD
+
 class ServerManager extends Manager
 {
     public function __construct(HetznerClient $client)

@@ -1,5 +1,7 @@
 <?php
 
+// Author : ITOMIG GmbH, Lucie BECHTOLD
+
 class Manager
 {
     protected $client;

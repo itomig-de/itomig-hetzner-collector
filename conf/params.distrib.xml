@@ -38,7 +38,7 @@
     <stop_on_synchro_error>no</stop_on_synchro_error>
     <!-- CURL options used for web requests to itop server -->
     <curl_options>
-        <CURLOPT_SSLVERSION>CURL_SSLVERSION_SSLv3</CURLOPT_SSLVERSION>
+        <CURLOPT_SSLVERSION>CURL_SSLVERSION_TLSv1_2</CURLOPT_SSLVERSION>
         <CURLOPT_SSL_VERIFYHOST>2</CURLOPT_SSL_VERIFYHOST>
         <CURLOPT_SSL_VERIFYPEER>1</CURLOPT_SSL_VERIFYPEER>
     </curl_options>
@@ -47,6 +47,8 @@
     <hetzner_tokens type="array">
         <token>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</token>
     </hetzner_tokens>
+
+    <teemip>false</teemip>
 
     <!-- Default Values for synchronized objects -->
     <org>Demo</org>
@@ -68,7 +70,11 @@
 
     <!-- Mapping for the OS Family -->
     <os_family type="array">
-        <pattern>/linux/Linux</pattern>
+        <pattern>/ubuntu/Ubuntu</pattern>
+        <pattern>/centos/CentOS</pattern>
+        <pattern>/debian/Debian</pattern>
+        <pattern>/fedora/Fedora</pattern>
+        <pattern>/unknown/Unknown</pattern>
         <!-- <pattern>/.*/%1$s</pattern> -->
     </os_family>
 </parameters>

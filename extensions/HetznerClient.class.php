@@ -1,5 +1,7 @@
 <?php
 
+// Author : ITOMIG GmbH, Lucie BECHTOLD
+
 class HetznerClient
 {
     private $url = "https://api.hetzner.cloud/v1/"; //TODO: Lucie: Make it configurable

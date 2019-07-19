@@ -1,5 +1,7 @@
 <?php
 
+// Author : ITOMIG GmbH, Lucie BECHTOLD
+
 abstract class HetznerCollector extends Collector
 {
 	protected $idx;
