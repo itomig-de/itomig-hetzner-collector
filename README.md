@@ -1,8 +1,11 @@
 # Data collector for Hetzner
 
+This stand-alone application collects information from Hetzner projects in order to automatically synchronize the farms and virtual machines in iTop.
+
+iTop is a web based open source tool for IT service management tasks by [Combodo](https://github.com/itomig-de/iTop)
+
  | Name        | Data collector for Hetzner           | 
- | ----        | --------------------------           | 
- | ----        | --------------------------           | 
+  | ----        | --------------------------           | 
  | Author      | Itomig GmbH, Lucie BECHTOLD          | 
  | Description | Inventory Data Collector for Hetzner | 
  | Version     | 1.0.0                                | 
@@ -11,53 +14,50 @@
  | Code        | collector.hetzner.itomig             | 
  | Standalone  | yes                                  | 
 
-This stand-alone application collects information from Hetzner projects in order to automatically synchronize the farms and virtual machines in iTop.
-
 ## Features
 
 Main functions:
 
-    * Automatic creation and update of Farms and Virtual Machines in iTop based on Hetzner data.
+* Automatic creation and update of Farms and Virtual Machines in iTop based on Hetzner data.
 Technical aspects:
-
-    * The collector can reside on any system with web access to iTop and (web) access to the Hetzner API
-    * The definition of the mapping between Hetzner fields and iTop fields is partially configurable.
-    * The creation of the Synchronization Data Sources in iTop is fully automated.
+* The collector can reside on any system with web access to iTop and (web) access to the Hetzner API
+   * The definition of the mapping between Hetzner fields and iTop fields is partially configurable.
+   * The creation of the Synchronization Data Sources in iTop is fully automated.
 This collector makes use of iTop's built-in Data Synchronization mechanism. For more information about how the data synchronization works, refer to Data Synchronization Overview 
 
 ## Revision History
 
  | Version | Release Date | Comments        | 
- | ------- | ------------ | --------        | 
- | ------- | ------------ | --------        | 
+  | ------- | ------------ | --------        | 
  | 1.0.0   | 2019-18-07   | Initial Version | 
 
 ## Limitations
 
-    * The current version is synchronizing neither the OS Family nor the OS Version.
-Requirements
+   * The current version is synchronizing neither the OS Family nor the OS Version.
 
-    * PHP (command line interface), version 5.3.0 up to 7.2 with the php-curl, php-dom and php-simplexml extensions installed.
-    * A minimum of one Hetzner access token (one token per project)
-    * An HTTP/HTTPS access to the iTop web services (REST + synchro_import.php and synchro_exec.php)
-Installation
+## Requirements
 
-    * Expand the content of the zip archive “hetzner-collector” in a folder on the machine that will run the collector application. This machine must have web access to the Hetzner API and a web access to the iTop server.
-    * create the file conf/params.local.xml to suit your installation, supplying the tokens to connect to the Hetzner API and iTop.
-By default this file should contains the values used to connect to the Hetzner API and to the iTop server:
+   * PHP (command line interface), version 5.3.0 up to 7.2 with the php-curl, php-dom and php-simplexml extensions installed.
+   * A minimum of one Hetzner access token (one token per project)
+   * An HTTP/HTTPS access to the iTop web services (REST + synchro_import.php and synchro_exec.php)
 
-  :::xml
-  `<itop_url>`https://localhost/itop/`</itop_url>`
-  `<itop_login>`admin`</itop_login>`
-  `<itop_password>``</itop_password>`
-  `<hetzner_tokens type="array">`
-    <token>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</token>
-  `</hetzner_tokens>`
-  `<teemip>`false`</teemip>`
+## Installation
 
+   * Copy “itomig-hetzner-collector” in a folder on the machine that will run the collector application. This machine must have web access to the Hetzner API and a web access to the iTop server.
+   * create the file conf/params.local.xml to suit your installation, supplying the tokens to connect to the Hetzner API and iTop.
+By default this file should contain the values used to connect to the Hetzner API and to the iTop server:
+
+```
+<itop_url>https://localhost/itop/</itop_url>
+<itop_login>admin</itop_login>
+<itop_password>PASSWORD</itop_password>
+<hetzner_tokens type="array">
+   <token>Tokkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</token>
+</hetzner_tokens>
+<teemip>false</teemip>
+```
 
  | Parameter      | Meaning                                                                                                                                                                      | Sample value              | 
- | ---------      | -------                                                                                                                                                                      | ------------              | 
  | ---------      | -------                                                                                                                                                                      | ------------              | 
  | itop_url       | to the iTop Application                                                                                                                                                      | https://localhost/        | 
  | itop_login     | Login (user account) for connecting to iTop. Must have rights for executing the data synchro, to create Persons and Users (and connect to REST services on iTop above 2.5.0) | admin                     | 
@@ -77,38 +77,36 @@ The file params.local.xml contains the values you have defined. They have preced
 Both files use exactly the same format.
 The configuration looks as follows:
 
-  :::xml
-      `<!-- Default Values for synchronized objects -->`
-      `<org>`Demo`</org>`
+ 
+      <!-- Default Values for synchronized objects -->
+      <org>Demo</org>
   
-      `<!-- Map the hetzner status to the status in itop -->`
-      `<status type="array">`
-          `<pattern>`/running/production`</pattern>`
-          `<pattern>`/initializing/implementation`</pattern>`
-          `<pattern>`/starting/implementation`</pattern>`
-          `<pattern>`/stopping/implementation`</pattern>`
-          `<pattern>`/off/stock`</pattern>`
-          `<pattern>`/deleting/obsolete`</pattern>`
-          `<pattern>`/migrating/implementation`</pattern>`
-          `<pattern>`/rebuilding/implementation`</pattern>`
-          `<pattern>`/unknown/stock`</pattern>`
-          `<!-- <pattern>`/.*/%1$s`</pattern>` -->  
-      `</status>`
-      `<default_status>`stock`</default_status>`
+      <!-- Map the hetzner status to the status in itop -->
+      <status type="array">
+          <pattern>/running/production</pattern>
+          <pattern>/initializing/implementation</pattern>
+          <pattern>/starting/implementation</pattern>
+          <pattern>/stopping/implementation</pattern>
+          <pattern>/off/stock</pattern>
+          <pattern>/deleting/obsolete</pattern>
+          <pattern>/migrating/implementation</pattern>
+          <pattern>/rebuilding/implementation</pattern>
+          <pattern>/unknown/stock</pattern>
+          <!-- <pattern>/.*/%1$s</pattern> -->  
+      </status>
+      <default_status>stock</default_status>
   
-      `<!-- Mapping for the OS Family -->`
-      `<os_family type="array">`
-          `<pattern>`/ubuntu/Ubuntu`</pattern>`
-          `<pattern>`/centos/CentOS`</pattern>`
-          `<pattern>`/debian/Debian`</pattern>`
-          `<pattern>`/fedora/Fedora`</pattern>`
-          `<pattern>`/unknown/Unknown`</pattern>`
-          `<!-- <pattern>`/.*/%1$s`</pattern>` -->
-      `</os_family>`
-
+      <!-- Mapping for the OS Family -->
+      <os_family type="array">
+          <pattern>/ubuntu/Ubuntu</pattern>
+          <pattern>/centos/CentOS</pattern>
+          <pattern>/debian/Debian</pattern>
+          <pattern>/fedora/Fedora</pattern>
+          <pattern>/unknown/Unknown</pattern>
+          <!-- <pattern>/.*/%1$s</pattern> -->
+      </os_family>
 
  | Parameter | Meaning                                                                                           | Default value                   | 
- | --------- | -------                                                                                           | -------------                   | 
  | --------- | -------                                                                                           | -------------                   | 
  | org       | The organization for the Farms and Virtual Machines                                               | `<org>`Demo`</org>`             | 
  | status    | The list of Hetzner statuses for the Virtual Machine object and their corresponding iTop statuses | `<code>``<status type="array">`
@@ -132,16 +130,17 @@ You can test your configuration without importing any data in iTop by running th
 
 This produces an output similar to the one shown below:
 
-  :::log
-  Debug - OK, the required PHP version to run this application is 5.3.0. The current PHP version is 7.3.6-1+ubuntu18.04.1+deb.sury.org+1.
-  Debug - OK, the required extension 'simplexml' is installed (current version: 7.3.6-1+ubuntu18.04.1+deb.sury.org+1 >= 0.1).
-  Debug - OK, the required extension 'dom' is installed (current version: 20031129 >= 1.0).
-  Debug - The following configuration files were loaded (in this order):
-  
+
+```
+   Debug - OK, the required PHP version to run this application is 5.3.0. The current PHP version is 7.3.6-1+ubuntu18.04.1+deb.sury.org+1.
+   Debug - OK, the required extension 'simplexml' is installed (current version: 7.3.6-1+ubuntu18.04.1+deb.sury.org+1 >= 0.1).
+   Debug - OK, the required extension 'dom' is installed (current version: 20031129 >= 1.0).
+   Debug - The following configuration files were loaded (in this order):
+   
           - /var/www/html/hetzner-collector/conf/params.distrib.xml
           - /var/www/html/hetzner-collector/conf/params.local.xml
   
-  The resulting configuration is:
+   The resulting configuration is:
   
   `<?xml version="1.0" encoding="UTF-8"?>`
   `<parameters>`
@@ -186,15 +185,17 @@ This produces an output similar to the one shown below:
   Debug - Registered collectors:
   Debug - Collector: iTopFarmCollector, version: 1.0.0
   Debug - Collector: iTopVirtualMachineCollector, version: 1.0.0
-
+```
 
 You can see the order in which the configuration files were loaded and the resulting configuration.
-Usage
+
+## Usage
+
 To launch the data collection and synchronization with iTop, run the following command (from the root directory where the data collector application is installed):
 php exec.php
 The following (optional) command line options are available:
+
  | Option                        | Meaning                                                                                                                                                    | default value | 
- | ------                        | -------                                                                                                                                                    | ------------- | 
  | ------                        | -------                                                                                                                                                    | ------------- | 
  | --console_log_level=`<level>` | Level of output to the console. From -1 (none) to 9 (debug).                                                                                               | 6 (info)      | 
  | --collect_only                | Run only the data collection, but do not synchronize the data with iTop                                                                                    | false         | 
